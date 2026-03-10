@@ -1,37 +1,33 @@
-import { EventBus } from "../event-bus";
-import { Scene } from "phaser";
+import Phaser from 'phaser'
 
-import PhaserLogo from "../objects/phaser-logo";
-import FpsText from "../objects/fps-text";
+export class Level1 extends Phaser.Scene {
 
-export class Level1 extends Scene {
-    camera: Phaser.Cameras.Scene2D.Camera;
-    background: Phaser.GameObjects.Image;
-    phaserLogo: PhaserLogo;
-    fpsText: FpsText;
+    private platforms?: Phaser.Physics.Arcade.StaticGroup;
 
     constructor() {
-        super("Level1");
+        super({ key: 'Level1' });
+    }
+
+    preload() {
+        this.load.image('sky', 'assets/sky.png');
+        this.load.image('ground', 'assets/platform.png');
+        this.load.image('star', 'assets/star.png');
+        this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+        this.load.image('bomb', 'assets/bomb.png');
     }
 
     create() {
-        this.camera = this.cameras.main;
-        this.camera.setBackgroundColor(0x00ff00);
+        this.add.image(400, 300, 'sky');
+        this.platforms = this.physics.add.staticGroup();
+        const ground = this.platforms.create(400, 568, 'ground') as Phaser.Physics.Arcade.Sprite;
+        ground.setScale(2).refreshBody();
 
-        this.background = this.add.image(512, 384, "background");
-        this.background.setAlpha(0.5);
-
-        this.phaserLogo = new PhaserLogo(this, this.cameras.main.width / 2, 0);
-        this.fpsText = new FpsText(this);
-
-        EventBus.emit("current-scene-ready", this);
+        this.platforms.create(600, 400, 'ground');
+        this.platforms.create(50, 250, 'ground');
+        this.platforms.create(750, 220, 'ground');
     }
 
     update() {
-        this.fpsText.update();
-    }
-
-    changeScene() {
-        this.scene.start("GameOver");
+        // Update game objects here
     }
 }
