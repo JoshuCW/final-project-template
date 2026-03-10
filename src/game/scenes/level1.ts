@@ -88,7 +88,6 @@ export class Level1 extends Phaser.Scene {
 
 
     private handleCollectStar(
-        player: Phaser.Types.Physics.Arcade.GameObjectWithBody | Phaser.Physics.Arcade.Body | Phaser.Physics.Arcade.StaticBody | Phaser.Tilemaps.Tile,
         star: Phaser.Types.Physics.Arcade.GameObjectWithBody | Phaser.Physics.Arcade.Body | Phaser.Physics.Arcade.StaticBody | Phaser.Tilemaps.Tile
     ) {
         const starSprite = star as Phaser.Physics.Arcade.Image;
